@@ -2,6 +2,7 @@ import os
 
 from django.contrib import admin
 from django.conf.urls.static import static
+from django.shortcuts import redirect
 from django.urls import path, include
 
 from config import settings
@@ -9,6 +10,7 @@ from config.settings import BASE_DIR
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', lambda request: redirect('/catalog/')),
     path('catalog/', include('catalog.urls', namespace='catalog'))
 ]
 
