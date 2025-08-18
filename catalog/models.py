@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import DateTimeField, ForeignKey
+from django.db.models import DateTimeField, ForeignKey, CharField
 
 
 class Category(models.Model):
@@ -16,7 +16,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=200, verbose_name='Наименование')
+    name = CharField(max_length=200, verbose_name='Наименование')
     description = models.CharField(max_length=300, verbose_name='Описание')
     image = models.ImageField(upload_to='catalog/images/', blank=True, verbose_name='Изображение')
     category = ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
