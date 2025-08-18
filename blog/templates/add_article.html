@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'includes/menu.html' %}
+<div class="container">
+    <h1>Добавление новой статьи</h1>
+    <div class="row">
+        <div class="col-4">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">
+                    {% if object %}
+                    Сохранить изменения
+                    {% else %}
+                    Добавить
+                    {% endif %}
+                </button>
+                <a href="{% url 'blog:home' %}" class="btn btn-secondary">Отмена</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
