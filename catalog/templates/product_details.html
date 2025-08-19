@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load my_tags %}
-{% include 'menu.html' %}
+{% include 'includes/menu.html' %}
 
 <style>
     .card-image {
@@ -29,7 +29,11 @@
                 </div>
                 <div class="card-body">
                     <div class="card-image">
+                        {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <p class="card-text"> Фото отсутствует</p>
+                        {% endif %}
                     </div>
                     <p class="card-text">Стоимость {{ product.price }} руб.</p>
                     <p class="card-text">Категория товара: {{ product.category }}</p>

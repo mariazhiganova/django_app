@@ -11,7 +11,9 @@ from config.settings import BASE_DIR
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('/catalog/')),
-    path('catalog/', include('catalog.urls', namespace='catalog'))
+    path('catalog/', include('catalog.urls', namespace='catalog')),
+
+    path('blogs/', include('blog.urls', namespace='blog')),
 ]
 
 if settings.DEBUG:

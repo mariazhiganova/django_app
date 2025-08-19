@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'includes/menu.html' %}
+
+<style>
+    .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .full-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.card-image img {
+    width: 100%;
+    height: auto;
+}
+
+</style>
+
+<div class="container full-page">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card mb-4 box-shadow d-flex flex-column h-100">
+                <div class="card-header">
+                    <div class="card-image">
+                        {% if article.preview %}
+                        <img src="{{ article.preview.url }}" alt="{{ article.title }}">
+                        {% else %}
+                        <p class="card-text"> Фото отсутствует</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body"><h4 class="my-0 font-weight-normal">{{ article.title }}</h4>
+                    <p class="card-text">{{ article.content }}</p>
+                    <a href="{% url 'blog:home' %}" class="btn btn-lg btn-block btn-outline-primary mb-2">Назад к
+                        статьям</a>
+                    <a href="{% url 'blog:delete_article' article.pk %}"
+                       class="btn btn-lg btn-block btn-outline-danger mb-2">Удалить</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ article.created_at }}
+                    <p class="card-text"><small class="text-muted">{{ article.views_counter }} просмотров</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
