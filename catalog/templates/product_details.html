@@ -38,7 +38,9 @@
                     <p class="card-text">Стоимость {{ product.price }} руб.</p>
                     <p class="card-text">Категория товара: {{ product.category }}</p>
                     <p class="card-text">Описание товара: {{ product.description|truncatechars:100 }}</p>
-                    <a href="/" class="btn btn-lg btn-block btn-outline-primary">Назад к списку</a>
+                    <a href="/" class="btn btn-lg btn-block btn-outline-primary mb-2">Назад к списку</a>
+                    <a href="{% url 'catalog:delete_product' product.pk %}"
+                       class="btn btn-lg btn-block btn-outline-danger mb-2">Удалить</a>
                 </div>
             </div>
         </div>
