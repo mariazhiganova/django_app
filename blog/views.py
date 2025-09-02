@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
@@ -5,14 +6,14 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, D
 from blog.models import Article
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     fields = ['title', 'content', 'preview', 'is_publicate']
     template_name = 'add_article.html'
     success_url = reverse_lazy('blog:home')
 
 
-class ArticleListView(ListView):
+class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = 'article_list.html'
     context_object_name = 'articles'
@@ -21,7 +22,7 @@ class ArticleListView(ListView):
         queryset = super().get_queryset()
         return queryset.filter(is_publicate=True)
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(LoginRequiredMixin, DetailView):
     model = Article
     template_name = 'article_detail.html'
     context_object_name = 'article'
