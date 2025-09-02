@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'includes/menu.html' %}
+<h2>Регистрация пользователя</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary mx-3">Зарегистрироваться</button>
+</form>
+{% endblock %}
