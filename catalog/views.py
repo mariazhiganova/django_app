@@ -72,9 +72,20 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('catalog:details', kwargs={'pk': self.object.pk})
 
 
-class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
-    permission_required = 'catalog.delete_product'
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('catalog:product_list')
     context_object_name = 'product'
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+
+        can_edit = (obj.owner == self.request.user or
+                    self.request.user.has_perm('catalog.delete_product') or
+                    self.request.user.is_superuser)
+
+        if not can_edit:
+            raise PermissionDenied('Вы не можете удалить этот продукт')
+
+        return obj
