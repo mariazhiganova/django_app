@@ -11,7 +11,7 @@ FORBIDDEN_WORDS = ('казино', 'криптовалюта', 'крипта', '
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ['owner']
 
     def clean_price(self):
         price = self.cleaned_data.get('price')
@@ -26,7 +26,7 @@ class ProductForm(ModelForm):
                 raise ValidationError("Размер файла не должен превышать 5MB")
 
             extension = os.path.splitext(image.name)[1].lower()
-            if extension not in ['.jpeg', '.png']:
+            if extension not in ['.jpeg', '.png', '.jpg']:
                 raise ValidationError("Файл должен быть в формате jpeg или png")
 
         return image
@@ -49,3 +49,9 @@ class ProductForm(ModelForm):
         self.fields['image'].widget.attrs.update({'class': 'form-control'})
         self.fields['category'].widget.attrs.update({'class': 'form-control'})
         self.fields['price'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Стоимость товара'})
+
+
+class ProductModeratorsForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ['is_publicate']
