@@ -5,6 +5,23 @@
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
         <a class="btn btn-primary" href="{% url 'blog:home' %}">Наш блог</a>
     </nav>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle me-2" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+            Категории товаров
+        </button>
+        <ul class="dropdown-menu">
+            {% for category in categories %}
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'catalog:products_by_category' category.id %}">
+                    {{ category.name }}
+                </a>
+            </li>
+            {% endfor %}
+
+        </ul>
+    </div>
 
     {% if user.is_authenticated %}
     <form action="{% url 'users:logout' %}" method="post" style="display: inline;">
