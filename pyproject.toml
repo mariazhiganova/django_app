@@ -12,6 +12,7 @@ psycopg2-binary = "^2.9.10"
 load-dotenv = "^0.1.0"
 pillow = "^11.2.1"
 ipython = "^9.3.0"
+redis = "^6.4.0"
 
 
 [build-system]
