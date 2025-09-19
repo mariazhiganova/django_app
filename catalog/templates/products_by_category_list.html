@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'includes/menu.html' %}
+
+<style>
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .col-3 {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+    }
+
+    .card-header h4 {
+      margin-top: auto;
+    }
+
+            .card-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+</style>
+
+<div class="container">
+    <div class="row text-center g-4">
+        {% for product in products %}
+        {% if product.is_publicate %}
+        <div class="col-3 d-flex">
+            <div class="card mb-4 box-shadow d-flex flex-column h-100">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-image">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <p class="card-text"> Фото отсутствует</p>
+                        {% endif %}
+                    </div>
+                    <h1 class="card-title pricing-card-title">{{ product.price }} руб.</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li>{{ product.description|truncatechars:100 }}</li>
+                    </ul>
+                    {% if perms.catalog.can_unpublish_product or user == product.owner %}
+                    <a href="{% url 'catalog:update_product' product.pk %}"
+                       class="btn btn-lg btn-block btn-outline-primary mb-2">Редактировать</a>
+                    {% endif %}
+                    <a href="{% url 'catalog:details' product.pk %}"
+                       class="btn btn-lg btn-block btn-outline-primary mb-2">Подробнее</a>
+
+                </div>
+            </div>
+        </div>
+        {% else %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

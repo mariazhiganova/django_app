@@ -69,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'catalog.context_processors.categories',
             ],
         },
     },
@@ -147,3 +149,10 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'my.nik.mariann@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('MY_EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CACHE_ENABLED = True if os.getenv('CACHE_ENABLED') == 'True' else False
+
+if CACHE_ENABLED:
+    CACHES = {'default':
+                  {'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+                   'LOCATION': os.getenv('LOCATION'), }}
